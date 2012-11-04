@@ -5,6 +5,7 @@ TODO
 [x] Be able to close a tab
 [x] Scrolling web navigator
 [x] URL entry
+[] Each time a web page loads, add to history
 [] Back and forward on a webpage
 [] Create a singleton for options, i.e. home page, etc.
 [] Double tap scroll, zoom
