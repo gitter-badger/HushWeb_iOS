@@ -1,0 +1,10 @@
+TODO
+
+[x] Create a new tab with a random page
+[x] Switch between tabs
+[x] Be able to close a tab
+[x] Scrolling web navigator
+[x] URL entry
+[] Back and forward on a webpage
+[] Create a singleton for options, i.e. home page, etc.
+[] Double tap scroll, zoom

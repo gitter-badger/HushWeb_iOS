@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0930B306163DDB3700A280D3 /* mainTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 0930B305163DDB3700A280D3 /* mainTab.png */; };
+		094797AC163FA8C900D6426D /* tempBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 094797AB163FA8C900D6426D /* tempBackButton.png */; };
 		094E1FD11633459400D456D0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD01633459400D456D0 /* UIKit.framework */; };
 		094E1FD31633459400D456D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD21633459400D456D0 /* Foundation.framework */; };
 		094E1FD51633459400D456D0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD41633459400D456D0 /* CoreGraphics.framework */; };
@@ -18,9 +20,18 @@
 		094E1FE71633459400D456D0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FE61633459400D456D0 /* Default-568h@2x.png */; };
 		094E1FEA1633459400D456D0 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FE81633459400D456D0 /* MainStoryboard.storyboard */; };
 		094E1FED1633459400D456D0 /* HushWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FEC1633459400D456D0 /* HushWebViewController.m */; };
+		094E1FF4163345B100D456D0 /* ToDo in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FF3163345B100D456D0 /* ToDo */; };
+		094E1FF71633460A00D456D0 /* HushWebNavigatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */; };
+		094E1FF91633461A00D456D0 /* HushWebNavigatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */; };
+		094E20021633469A00D456D0 /* HushWebModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FFC1633469A00D456D0 /* HushWebModel.m */; };
+		094E20031633469A00D456D0 /* HushWebTabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FFE1633469A00D456D0 /* HushWebTabManager.m */; };
+		094E20041633469A00D456D0 /* HushWebTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E20011633469A00D456D0 /* HushWebTab.m */; };
+		09E0963C16452A1B001234C3 /* finger.png in Resources */ = {isa = PBXBuildFile; fileRef = 09E0963B16452A1B001234C3 /* finger.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0930B305163DDB3700A280D3 /* mainTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainTab.png; sourceTree = "<group>"; };
+		094797AB163FA8C900D6426D /* tempBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempBackButton.png; sourceTree = "<group>"; };
 		094E1FCC1633459400D456D0 /* HushWeb_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HushWeb_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		094E1FD01633459400D456D0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		094E1FD21633459400D456D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -37,6 +48,17 @@
 		094E1FE91633459400D456D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		094E1FEB1633459400D456D0 /* HushWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HushWebViewController.h; sourceTree = "<group>"; };
 		094E1FEC1633459400D456D0 /* HushWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HushWebViewController.m; sourceTree = "<group>"; };
+		094E1FF3163345B100D456D0 /* ToDo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ToDo; path = HushWeb_iOS/ToDo; sourceTree = "<group>"; };
+		094E1FF51633460A00D456D0 /* HushWebNavigatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebNavigatorView.h; sourceTree = "<group>"; };
+		094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebNavigatorView.m; sourceTree = "<group>"; };
+		094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HushWebNavigatorView.xib; sourceTree = "<group>"; };
+		094E1FFB1633469A00D456D0 /* HushWebModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebModel.h; sourceTree = "<group>"; };
+		094E1FFC1633469A00D456D0 /* HushWebModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebModel.m; sourceTree = "<group>"; };
+		094E1FFD1633469A00D456D0 /* HushWebTabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebTabManager.h; sourceTree = "<group>"; };
+		094E1FFE1633469A00D456D0 /* HushWebTabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebTabManager.m; sourceTree = "<group>"; };
+		094E20001633469A00D456D0 /* HushWebTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebTab.h; sourceTree = "<group>"; };
+		094E20011633469A00D456D0 /* HushWebTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebTab.m; sourceTree = "<group>"; };
+		09E0963B16452A1B001234C3 /* finger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,9 +75,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0930B303163DDB3700A280D3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0930B304163DDB3700A280D3 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0930B304163DDB3700A280D3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				09E0963B16452A1B001234C3 /* finger.png */,
+				0930B305163DDB3700A280D3 /* mainTab.png */,
+				094797AB163FA8C900D6426D /* tempBackButton.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		094E1FC11633459400D456D0 = {
 			isa = PBXGroup;
 			children = (
+				094E1FF3163345B100D456D0 /* ToDo */,
 				094E1FD61633459400D456D0 /* HushWeb_iOS */,
 				094E1FCF1633459400D456D0 /* Frameworks */,
 				094E1FCD1633459400D456D0 /* Products */,
@@ -88,6 +129,12 @@
 				094E1FE81633459400D456D0 /* MainStoryboard.storyboard */,
 				094E1FEB1633459400D456D0 /* HushWebViewController.h */,
 				094E1FEC1633459400D456D0 /* HushWebViewController.m */,
+				094E1FF51633460A00D456D0 /* HushWebNavigatorView.h */,
+				094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */,
+				094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */,
+				094E1FFA1633469A00D456D0 /* Model */,
+				094E1FFF1633469A00D456D0 /* Objects */,
+				0930B303163DDB3700A280D3 /* Resources */,
 				094E1FD71633459400D456D0 /* Supporting Files */,
 			);
 			path = HushWeb_iOS;
@@ -105,6 +152,26 @@
 				094E1FE61633459400D456D0 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		094E1FFA1633469A00D456D0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				094E1FFB1633469A00D456D0 /* HushWebModel.h */,
+				094E1FFC1633469A00D456D0 /* HushWebModel.m */,
+				094E1FFD1633469A00D456D0 /* HushWebTabManager.h */,
+				094E1FFE1633469A00D456D0 /* HushWebTabManager.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		094E1FFF1633469A00D456D0 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				094E20001633469A00D456D0 /* HushWebTab.h */,
+				094E20011633469A00D456D0 /* HushWebTab.m */,
+			);
+			path = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +231,11 @@
 				094E1FE51633459400D456D0 /* Default@2x.png in Resources */,
 				094E1FE71633459400D456D0 /* Default-568h@2x.png in Resources */,
 				094E1FEA1633459400D456D0 /* MainStoryboard.storyboard in Resources */,
+				094E1FF4163345B100D456D0 /* ToDo in Resources */,
+				094E1FF91633461A00D456D0 /* HushWebNavigatorView.xib in Resources */,
+				0930B306163DDB3700A280D3 /* mainTab.png in Resources */,
+				094797AC163FA8C900D6426D /* tempBackButton.png in Resources */,
+				09E0963C16452A1B001234C3 /* finger.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +249,10 @@
 				094E1FDD1633459400D456D0 /* main.m in Sources */,
 				094E1FE11633459400D456D0 /* HushWebAppDelegate.m in Sources */,
 				094E1FED1633459400D456D0 /* HushWebViewController.m in Sources */,
+				094E1FF71633460A00D456D0 /* HushWebNavigatorView.m in Sources */,
+				094E20021633469A00D456D0 /* HushWebModel.m in Sources */,
+				094E20031633469A00D456D0 /* HushWebTabManager.m in Sources */,
+				094E20041633469A00D456D0 /* HushWebTab.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +300,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -245,7 +321,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -258,6 +334,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HushWeb_iOS/HushWeb_iOS-Prefix.pch";
 				INFOPLIST_FILE = "HushWeb_iOS/HushWeb_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -269,6 +346,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HushWeb_iOS/HushWeb_iOS-Prefix.pch";
 				INFOPLIST_FILE = "HushWeb_iOS/HushWeb_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -293,6 +371,7 @@
 				094E1FF21633459400D456D0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
