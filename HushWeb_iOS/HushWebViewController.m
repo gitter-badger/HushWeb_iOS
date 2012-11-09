@@ -22,6 +22,7 @@
 
 @synthesize tabPanRecognizer = _tabPanRecognizer;
 @synthesize navigatorPanRecognizer = _navigatorPanRecognizer;
+@synthesize tapGestureRecognizer = _tapGestureRecognizer;
 
 @synthesize model = _model;
 
@@ -43,6 +44,12 @@
     self.navigatorPanRecognizer.delaysTouchesEnded = YES;
     self.navigatorPanRecognizer.cancelsTouchesInView = YES;
     self.navigatorPanRecognizer.delegate = self;
+    
+    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    self.tapGestureRecognizer.numberOfTapsRequired = 1;
+    self.tapGestureRecognizer.numberOfTouchesRequired = 1;
+    self.tapGestureRecognizer.delegate = self;
+    self.tapGestureRecognizer.delaysTouchesBegan = YES;
     
     self.view.backgroundColor = [UIColor lightGrayColor];
     
@@ -88,11 +95,15 @@
     currentTabImageView.frame = CGRectMake(0, 0, 133, 200);
     [self.view addSubview:currentTabImageView];
     
+    currentWebView.delegate = nil;
+    [currentWebView removeGestureRecognizer:self.tapGestureRecognizer];
+    
     UIWebView *webView = nextTab.webView;
+    webView.delegate = self;
+    [webView addGestureRecognizer:self.tapGestureRecognizer];
     webView.frame = self.view.bounds;
     NSURLRequest *urlRequest;
-    if (index == 0) urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
-    else urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.apple.com"]];
+    urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
     [webView loadRequest:urlRequest];
     
     [self.view bringSubviewToFront:self.tabImageView];
@@ -105,12 +116,24 @@
         currentWebView = webView;
         [self.view bringSubviewToFront:self.tabImageView];
     }];
-    
-    //add gesture recognizers
 }
 
 - (void)closeCurrentTab {
     [self tabWasSelectedAt:[self.model closeCurrentTab]];
+}
+
+#pragma UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    //[self hideNavigator];
 }
 
 #pragma Navigator Delegate
@@ -212,6 +235,33 @@
                 break;
         }
     }
+}
+
+- (void)handleTapGesture:(id)sender {
+    NSLog(@"TAP");
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    
+}
+
+#pragma navigator stuff
+- (void)hideNavigator {
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, self.view.frame.origin.y - self.tabImageView.frame.size.height, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
+        [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (void)showNavigator {
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, self.view.frame.origin.y, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
+        [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 - (void)snapNavigatorToPlace {

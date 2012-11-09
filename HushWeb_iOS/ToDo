@@ -9,3 +9,27 @@ TODO
 [] Back and forward on a webpage
 [] Create a singleton for options, i.e. home page, etc.
 [] Double tap scroll, zoom
+
+
+
+
+
+
+NEEDED GESTURES
+Swipe
+    - From Bottom:
+        - Overlay four buttons
+            - Up-left: tabs? sharing?
+            - Up: bring up navigator
+            - Up-right: scroll/zoom control
+            - Just below up: url/search
+    - From Left:
+        - Back
+    - From Right:
+        - Forward
+
+ScrollViewDidScroll
+    - Check scrollview == webview.scrollview
+        - If contentOffset.x < 0 - pull to go back
+        - If contentOffset.x > self.view.frame.size.width - pull
+        - If contentOffset.y < 0 - pull to refresh

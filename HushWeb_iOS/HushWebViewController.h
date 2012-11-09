@@ -11,9 +11,11 @@
 
 @class HushWebModel;
 
-@interface HushWebViewController : UIViewController <HushWebNavigatorDelegate, UIGestureRecognizerDelegate> {
+@interface HushWebViewController : UIViewController <HushWebNavigatorDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate> {
     float tabAndManagerAnchor;
     BOOL panningFromBottom;
+    
+    BOOL doSomethingWithWebview;
     
     UIWebView *currentWebView;
     UIImageView *currentTabImageView;
@@ -26,7 +28,9 @@
 //Gestures
 @property (nonatomic, weak) IBOutlet UIPanGestureRecognizer *tabPanRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *navigatorPanRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 - (IBAction)handlePanGesture:(id)sender;
+- (IBAction)handleTapGesture:(id)sender;
 
 
 
