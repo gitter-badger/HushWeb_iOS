@@ -13,47 +13,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView contentMode="scaleToFill" image="mainTab.png" id="KV1-lQ-s1Q">
-                                <rect key="frame" x="210" y="0.0" width="100" height="24"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <gestureRecognizers/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" id="bcB-hD-Q2y">
+                                <rect key="frame" x="10" y="10" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="F8F-Xc-7qQ" appends="YES" id="jyT-Bg-Zy8"/>
+                                    <outlet property="delegate" destination="2" id="i7i-Ha-oVe"/>
                                 </connections>
-                            </imageView>
+                            </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="tabImageView" destination="KV1-lQ-s1Q" id="hWx-Bh-wYg"/>
-                        <outlet property="tabPanRecognizer" destination="F8F-Xc-7qQ" id="1PJ-Sb-HRH"/>
+                        <outlet property="panGestureRecognizer" destination="ZYp-Ml-mJE" id="wpg-AB-yq5"/>
+                        <outlet property="urlTextField" destination="bcB-hD-Q2y" id="6jl-Ao-Cj0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="F8F-Xc-7qQ">
+                <panGestureRecognizer minimumNumberOfTouches="1" maximumNumberOfTouches="1" id="ZYp-Ml-mJE">
                     <connections>
-                        <action selector="handlePanGesture:" destination="2" id="zxz-Lg-isM"/>
-                        <outlet property="delegate" destination="2" id="j6X-KM-Mmc"/>
+                        <action selector="handlePanGesture:" destination="2" id="IiF-GM-0lI"/>
+                        <outlet property="delegate" destination="2" id="6ez-xT-XIe"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
         </scene>
     </scenes>
-    <resources>
-        <image name="mainTab.png" width="160" height="30"/>
-    </resources>
     <classes>
         <class className="HushWebViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HushWebViewController.h"/>
             <relationships>
                 <relationship kind="action" name="handlePanGesture:"/>
-                <relationship kind="action" name="handleTapGesture:"/>
-                <relationship kind="outlet" name="tabImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="tabPanRecognizer" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="panGestureRecognizer" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="outlet" name="urlTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
     </classes>

@@ -17,12 +17,12 @@
 
 @implementation HushWebViewController
 
-@synthesize tabImageView = _tabImageView;
-@synthesize navigator = _navigator;
+@synthesize panOptions = _panOptions;
+@synthesize urlTextField = _urlTextField;
 
-@synthesize tabPanRecognizer = _tabPanRecognizer;
-@synthesize navigatorPanRecognizer = _navigatorPanRecognizer;
-@synthesize tapGestureRecognizer = _tapGestureRecognizer;
+@synthesize grayOverlay = _grayOverlay;
+
+@synthesize panGestureRecognizer = _panGestureRecognizer;
 
 @synthesize model = _model;
 
@@ -30,37 +30,20 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-    // alloc navigator
-    // add subview to self.frame.origin.y - navigator.view.frame.size.height
-    // add button subview for pulling and pushing
-    self.navigator = [[HushWebNavigatorView alloc] init];
-    self.navigator.frame = CGRectMake(self.view.frame.size.width / 2 - self.navigator.frame.size.width / 2, 0 - self.navigator.frame.size.height, self.navigator.frame.size.width, self.navigator.frame.size.height);
-    self.navigator.delegate = self;
-    [self.view addSubview:self.navigator];
-    
-    self.navigatorPanRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    self.navigatorPanRecognizer.maximumNumberOfTouches = 1;
-    self.navigatorPanRecognizer.delaysTouchesEnded = YES;
-    self.navigatorPanRecognizer.cancelsTouchesInView = YES;
-    self.navigatorPanRecognizer.delegate = self;
-    
-    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    self.tapGestureRecognizer.numberOfTapsRequired = 1;
-    self.tapGestureRecognizer.numberOfTouchesRequired = 1;
-    self.tapGestureRecognizer.delegate = self;
-    self.tapGestureRecognizer.delaysTouchesBegan = YES;
-    
+
     self.view.backgroundColor = [UIColor lightGrayColor];
+    
+    self.panOptions = [[HushWebPanOptionsView alloc] init];
+    self.panOptions.frame = self.view.frame;
+    self.panOptions.pawPrint.frame = (CGRect){{self.panOptions.pawPrint.frame.origin.x, self.panOptions.frame.size.height - 48}, {48, 48}};
+    
+    self.urlTextField.center = CGPointMake(self.view.center.x, self.view.frame.origin.y - self.urlTextField.frame.size.height);
     
     self.model = [[HushWebModel alloc] init];
     [self.model createNewTab];
     //[self.model createNewTab];
     
     [self tabWasSelectedAt:0];
-    //[self performSelector:@selector(hush) withObject:nil afterDelay:4.0];
-    
-    tabAndManagerAnchor = self.tabImageView.center.y - self.navigator.center.y;
     
 }
 
@@ -96,17 +79,16 @@
     [self.view addSubview:currentTabImageView];
     
     currentWebView.delegate = nil;
-    [currentWebView removeGestureRecognizer:self.tapGestureRecognizer];
+    [currentWebView removeGestureRecognizer:self.panGestureRecognizer];
     
     UIWebView *webView = nextTab.webView;
     webView.delegate = self;
-    [webView addGestureRecognizer:self.tapGestureRecognizer];
     webView.frame = self.view.bounds;
     NSURLRequest *urlRequest;
     urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
     [webView loadRequest:urlRequest];
+    [webView addGestureRecognizer:self.panGestureRecognizer];
     
-    [self.view bringSubviewToFront:self.tabImageView];
     [UIView animateWithDuration:0.4 animations:^(void) {
         currentTabImageView.frame = self.view.bounds;
     } completion:^(BOOL finished) {
@@ -114,7 +96,6 @@
         [currentTabImageView removeFromSuperview];
         [currentWebView removeFromSuperview];
         currentWebView = webView;
-        [self.view bringSubviewToFront:self.tabImageView];
     }];
 }
 
@@ -145,190 +126,72 @@
 
 #pragma Gesture Recognizers
 - (IBAction)handlePanGesture:(id)sender {
-    if (sender == self.tabPanRecognizer) {
-        CGPoint fingerLocation = [sender locationInView:self.view];
-        
-        switch ([sender state]) {
+    if (sender == self.panGestureRecognizer) {
+        CGPoint startingPoint = [sender locationInView:currentWebView];
+        switch ([self.panGestureRecognizer state]) {
             case UIGestureRecognizerStateBegan:
-                [self.view bringSubviewToFront:self.navigator];
-                
+                if (startingPoint.y >= currentWebView.frame.size.height - 60) {
+                    currentWebView.scrollView.scrollEnabled = NO;
+                    panFromPaw = YES;
+                    [self.view addSubview:self.panOptions];
+                    [UIView animateWithDuration:0.2 animations:^(void) {
+                        [self.panOptions setAlpha:0.8];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                }
                 break;
             case UIGestureRecognizerStateChanged:
-                //this is a check to make sure the navigator doesn't go too far in or out
-                if (self.navigator.frame.origin.y > -40) {
-                    [sender setEnabled:NO];
-                    [sender setEnabled:YES];
-                    [self snapNavigatorToPlace];
-                } else if (self.tabImageView.frame.origin.y < 0) {
-                    [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, 0, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
-                    [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
-                } else {
-                    //here we do the appearance/disappearances
-                    [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, fingerLocation.y) ];
-                    [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
+                if (!panFromPaw) {
                     
-                    [self changeNavigatorAppearances];
+                } else {
+                    self.panOptions.touchPoint = [self.panGestureRecognizer locationInView:self.panOptions];
+                    [self.panOptions setNeedsDisplay];
                 }
-                
                 break;
-                
             case UIGestureRecognizerStateEnded:
-                if (self.navigator.frame.origin.y > -40) {
-                    [self.navigator setFrame:CGRectMake(self.navigator.frame.origin.x, -40, self.navigator.frame.size.width, self.navigator.frame.size.height)];
-                    [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, self.navigator.center.y + tabAndManagerAnchor)];
-                } else if (self.tabImageView.frame.origin.y < 0) {
-                    [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, 0, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
-                    [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
+                if (panFromPaw) {
+                    currentWebView.scrollView.scrollEnabled = YES;
+                    
+                    CGPoint endingPoint = [sender locationInView:self.panOptions];
+                    
+                    [UIView animateWithDuration:0.2 animations:^(void) {
+                        [self.panOptions setAlpha:0.0];
+                        
+                    } completion:^(BOOL finished) {
+                        [self.panOptions removeFromSuperview];
+                        
+                        if (CGRectContainsPoint(self.panOptions.urlEntry.frame, endingPoint)) {
+                            self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.frame];
+                            self.grayOverlay.backgroundColor = [UIColor lightGrayColor];
+                            self.grayOverlay.alpha = 0.0;
+                            [self.view addSubview:self.grayOverlay];
+                            
+                            [self.view bringSubviewToFront:self.urlTextField];
+                            [UIView animateWithDuration:0.2 animations:^(void) {
+                                [self.grayOverlay setAlpha:0.5];
+                                [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.frame.origin.y + self.urlTextField.frame.size.height)];
+                                [self.urlTextField becomeFirstResponder];
+                            } completion:^(BOOL finished) {
+                            }];
+                        }
+                    }];
                 }
-
-                [self snapNavigatorToPlace];
-                //[self changeNavigatorAppearances];
+                panFromPaw = NO;
                 
-                [sender setEnabled:YES];
                 break;
             default:
                 break;
         }
     }
-    
-    else if (sender == self.navigatorPanRecognizer) {
-        CGPoint fingerLocation = [sender locationInView:self.view];
-        
-        switch ([sender state]) {
-            case UIGestureRecognizerStateBegan:
-                [self.view bringSubviewToFront:self.navigator];
-                if ([sender locationInView:self.navigator].y > self.navigator.frame.size.height - 60) {
-                    panningFromBottom = YES;
-                    [self.navigator.fingerAnimationImage setHidden:YES];
-                }
-                
-                break;
-            case UIGestureRecognizerStateChanged:
-                if (panningFromBottom) {
-                    if (self.navigator.frame.origin.y > -40) {
-                        [sender setEnabled:NO];
-                        [sender setEnabled:YES];
-                        [self snapNavigatorToPlace];
-                    } else {
-                        [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, fingerLocation.y + 40) ];
-                        [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
-                        [self changeNavigatorAppearances];
-                    }
-                }
-                break;
-                
-            case UIGestureRecognizerStateEnded:
-                panningFromBottom = NO;
-                if (self.navigator.frame.origin.y > -40) {
-                    [self.navigator setFrame:CGRectMake(self.navigator.frame.origin.x, -40, self.navigator.frame.size.width, self.navigator.frame.size.height)];
-                    [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, self.navigator.center.y + tabAndManagerAnchor)];
-                } else if (self.tabImageView.frame.origin.y < 0) {
-                    [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, 0, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
-                    [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
-                }
-                
-                [self snapNavigatorToPlace];
-                
-                [sender setEnabled:YES];
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-- (void)handleTapGesture:(id)sender {
-    NSLog(@"TAP");
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
+    return YES;
 }
 
 #pragma navigator stuff
-- (void)hideNavigator {
-    [UIView animateWithDuration:0.4 animations:^(void) {
-        [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, self.view.frame.origin.y - self.tabImageView.frame.size.height, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
-        [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
-    } completion:^(BOOL finished) {
-        
-    }];
-}
 
-- (void)showNavigator {
-    [UIView animateWithDuration:0.4 animations:^(void) {
-        [self.tabImageView setFrame:CGRectMake(self.tabImageView.frame.origin.x, self.view.frame.origin.y, self.tabImageView.frame.size.width, self.tabImageView.frame.size.height)];
-        [self.navigator setCenter:CGPointMake(self.navigator.center.x, self.tabImageView.center.y - tabAndManagerAnchor)];
-    } completion:^(BOOL finished) {
-        
-    }];
-}
-
-- (void)snapNavigatorToPlace {
-    if (self.navigator.frame.origin.y > self.view.frame.origin.y - self.navigator.frame.size.height + 0 &&
-        self.navigator.frame.origin.y <= self.view.frame.origin.y - self.navigator.frame.size.height + 50) {
-        [UIView animateWithDuration:0.4 animations:^(void) {
-            [self.navigator setFrame:(CGRect){{self.navigator.frame.origin.x, self.view.frame.origin.y - self.navigator.frame.size.height}, self.navigator.frame.size}];
-            [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, self.navigator.center.y + tabAndManagerAnchor)];
-            [self changeNavigatorAppearances];
-        } completion:^(BOOL finished) {
-            [self.navigator removeGestureRecognizer:self.navigatorPanRecognizer];
-        }];
-    } else if (self.navigator.frame.origin.y > self.view.frame.origin.y - self.navigator.frame.size.height + 50 &&
-        self.navigator.frame.origin.y <= self.view.frame.origin.y - self.navigator.frame.size.height + 170) {
-        [UIView animateWithDuration:0.4 animations:^(void) {
-            [self.navigator setFrame:(CGRect){{self.navigator.frame.origin.x, self.view.frame.origin.y - self.navigator.frame.size.height + 106}, self.navigator.frame.size}];
-            [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, self.navigator.center.y + tabAndManagerAnchor)];
-            [self changeNavigatorAppearances];
-        } completion:^(BOOL finished) {
-            [self.navigator removeGestureRecognizer:self.navigatorPanRecognizer];
-        }];
-    }  else if (self.navigator.frame.origin.y > -120) {
-        [UIView animateWithDuration:0.4 animations:^(void) {
-            [self.navigator setFrame:CGRectMake(self.navigator.frame.origin.x, -40, self.navigator.frame.size.width, self.navigator.frame.size.height)];
-            [self.tabImageView setCenter:CGPointMake(self.tabImageView.center.x, self.navigator.center.y + tabAndManagerAnchor)];
-            [self changeNavigatorAppearances];
-        } completion:^(BOOL finished) {
-            [self.navigator addGestureRecognizer:self.navigatorPanRecognizer];
-            
-            NSLog(@"NO");
-            [self.navigator.fingerAnimationImage setHidden:NO];
-            [UIView animateWithDuration:2.0 animations:^(void) {
-                [UIView setAnimationRepeatCount:3];
-                self.navigator.fingerAnimationImage.frame = (CGRect){{self.navigator.frame.size.width - 35, self.navigator.frame.size.height - 60}, self.navigator.fingerAnimationImage.frame.size};
-            } completion:^(BOOL finished) {
-                [self.navigator.fingerAnimationImage setHidden:YES];
-            }];
-        }];
-    }
-}
-
-- (void)changeNavigatorAppearances {
-    if (self.navigator.frame.origin.y > (self.view.frame.origin.y - self.navigator.frame.size.height + 105)) {
-        [UIView animateWithDuration:0.4 animations:^(void) {
-            [self.navigator.urlAndControlsView setAlpha:1.0];
-        } completion:^(BOOL completed) {
-            
-        }];
-        [self.navigator.urlAndControlsView setCenter:
-         CGPointMake(self.navigator.urlAndControlsView.center.x,
-                     self.navigator.frame.size.height - (self.navigator.frame.size.height + self.navigator.frame.origin.y - 60))];
-        if (self.navigator.frame.origin.y > -40) {
-            [self.navigator.urlAndControlsView setCenter:
-             CGPointMake(self.navigator.urlAndControlsView.center.x,
-                         self.navigator.frame.size.height - (self.navigator.frame.size.height - 40 - 60))];
-        }
-    } else {
-        [self.navigator.urlAndControlsView setCenter:
-         CGPointMake(self.navigator.urlAndControlsView.center.x,
-                     self.navigator.frame.size.height - (self.navigator.frame.size.height + self.navigator.frame.origin.y - 60))];
-        [UIView animateWithDuration:0.2 animations:^(void) {
-            [self.navigator.urlAndControlsView setAlpha:0.0];
-        } completion:^(BOOL completed) {
-            
-        }];
-    }
-}
 
 
 

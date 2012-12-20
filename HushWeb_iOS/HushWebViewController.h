@@ -7,31 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HushWebNavigatorView.h"
+#import "HushWebPanOptionsView.h"
 
 @class HushWebModel;
 
-@interface HushWebViewController : UIViewController <HushWebNavigatorDelegate, UIGestureRecognizerDelegate, UIWebViewDelegate> {
-    float tabAndManagerAnchor;
-    BOOL panningFromBottom;
-    
-    BOOL doSomethingWithWebview;
+@interface HushWebViewController : UIViewController <UIGestureRecognizerDelegate, UIWebViewDelegate, UITextFieldDelegate> {
     
     UIWebView *currentWebView;
     UIImageView *currentTabImageView;
+    
+    BOOL panFromPaw;
 }
 
 //Views
-@property (nonatomic, weak) IBOutlet UIImageView *tabImageView;
-@property (nonatomic, strong) HushWebNavigatorView *navigator;
+@property (nonatomic, strong) HushWebPanOptionsView *panOptions;
+@property (nonatomic, weak) IBOutlet UITextField *urlTextField;
+
+@property (nonatomic, strong) UIImageView *grayOverlay;
 
 //Gestures
-@property (nonatomic, weak) IBOutlet UIPanGestureRecognizer *tabPanRecognizer;
-@property (nonatomic, strong) UIPanGestureRecognizer *navigatorPanRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, weak) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+
 - (IBAction)handlePanGesture:(id)sender;
-- (IBAction)handleTapGesture:(id)sender;
-
-
 
 @end

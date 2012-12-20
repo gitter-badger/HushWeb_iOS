@@ -21,12 +21,14 @@
 		094E1FEA1633459400D456D0 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FE81633459400D456D0 /* MainStoryboard.storyboard */; };
 		094E1FED1633459400D456D0 /* HushWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FEC1633459400D456D0 /* HushWebViewController.m */; };
 		094E1FF4163345B100D456D0 /* ToDo in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FF3163345B100D456D0 /* ToDo */; };
-		094E1FF71633460A00D456D0 /* HushWebNavigatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */; };
-		094E1FF91633461A00D456D0 /* HushWebNavigatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */; };
 		094E20021633469A00D456D0 /* HushWebModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FFC1633469A00D456D0 /* HushWebModel.m */; };
 		094E20031633469A00D456D0 /* HushWebTabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E1FFE1633469A00D456D0 /* HushWebTabManager.m */; };
 		094E20041633469A00D456D0 /* HushWebTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E20011633469A00D456D0 /* HushWebTab.m */; };
+		098BDDB11653B05B004863BF /* HushWebPanOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BDDB01653B05B004863BF /* HushWebPanOptionsView.m */; };
+		098BDDB31653B0B4004863BF /* HushWebPanOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098BDDB21653B0B4004863BF /* HushWebPanOptionsView.xib */; };
+		09D2B13E166A9A4D00DFE807 /* urlEntryLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 09D2B13D166A9A4D00DFE807 /* urlEntryLogo.png */; };
 		09E0963C16452A1B001234C3 /* finger.png in Resources */ = {isa = PBXBuildFile; fileRef = 09E0963B16452A1B001234C3 /* finger.png */; };
+		09EE45231653BA2E000BE005 /* mainPaw.png in Resources */ = {isa = PBXBuildFile; fileRef = 09EE45221653BA2E000BE005 /* mainPaw.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,16 +51,18 @@
 		094E1FEB1633459400D456D0 /* HushWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HushWebViewController.h; sourceTree = "<group>"; };
 		094E1FEC1633459400D456D0 /* HushWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HushWebViewController.m; sourceTree = "<group>"; };
 		094E1FF3163345B100D456D0 /* ToDo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ToDo; path = HushWeb_iOS/ToDo; sourceTree = "<group>"; };
-		094E1FF51633460A00D456D0 /* HushWebNavigatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebNavigatorView.h; sourceTree = "<group>"; };
-		094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebNavigatorView.m; sourceTree = "<group>"; };
-		094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HushWebNavigatorView.xib; sourceTree = "<group>"; };
 		094E1FFB1633469A00D456D0 /* HushWebModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebModel.h; sourceTree = "<group>"; };
 		094E1FFC1633469A00D456D0 /* HushWebModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebModel.m; sourceTree = "<group>"; };
 		094E1FFD1633469A00D456D0 /* HushWebTabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebTabManager.h; sourceTree = "<group>"; };
 		094E1FFE1633469A00D456D0 /* HushWebTabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebTabManager.m; sourceTree = "<group>"; };
 		094E20001633469A00D456D0 /* HushWebTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebTab.h; sourceTree = "<group>"; };
 		094E20011633469A00D456D0 /* HushWebTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebTab.m; sourceTree = "<group>"; };
+		098BDDAF1653B05B004863BF /* HushWebPanOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebPanOptionsView.h; sourceTree = "<group>"; };
+		098BDDB01653B05B004863BF /* HushWebPanOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebPanOptionsView.m; sourceTree = "<group>"; };
+		098BDDB21653B0B4004863BF /* HushWebPanOptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HushWebPanOptionsView.xib; sourceTree = "<group>"; };
+		09D2B13D166A9A4D00DFE807 /* urlEntryLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = urlEntryLogo.png; sourceTree = "<group>"; };
 		09E0963B16452A1B001234C3 /* finger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = finger.png; sourceTree = "<group>"; };
+		09EE45221653BA2E000BE005 /* mainPaw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainPaw.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,8 @@
 		0930B304163DDB3700A280D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				09D2B13D166A9A4D00DFE807 /* urlEntryLogo.png */,
+				09EE45221653BA2E000BE005 /* mainPaw.png */,
 				09E0963B16452A1B001234C3 /* finger.png */,
 				0930B305163DDB3700A280D3 /* mainTab.png */,
 				094797AB163FA8C900D6426D /* tempBackButton.png */,
@@ -129,9 +135,9 @@
 				094E1FE81633459400D456D0 /* MainStoryboard.storyboard */,
 				094E1FEB1633459400D456D0 /* HushWebViewController.h */,
 				094E1FEC1633459400D456D0 /* HushWebViewController.m */,
-				094E1FF51633460A00D456D0 /* HushWebNavigatorView.h */,
-				094E1FF61633460A00D456D0 /* HushWebNavigatorView.m */,
-				094E1FF81633461900D456D0 /* HushWebNavigatorView.xib */,
+				098BDDAF1653B05B004863BF /* HushWebPanOptionsView.h */,
+				098BDDB01653B05B004863BF /* HushWebPanOptionsView.m */,
+				098BDDB21653B0B4004863BF /* HushWebPanOptionsView.xib */,
 				094E1FFA1633469A00D456D0 /* Model */,
 				094E1FFF1633469A00D456D0 /* Objects */,
 				0930B303163DDB3700A280D3 /* Resources */,
@@ -232,10 +238,12 @@
 				094E1FE71633459400D456D0 /* Default-568h@2x.png in Resources */,
 				094E1FEA1633459400D456D0 /* MainStoryboard.storyboard in Resources */,
 				094E1FF4163345B100D456D0 /* ToDo in Resources */,
-				094E1FF91633461A00D456D0 /* HushWebNavigatorView.xib in Resources */,
 				0930B306163DDB3700A280D3 /* mainTab.png in Resources */,
 				094797AC163FA8C900D6426D /* tempBackButton.png in Resources */,
 				09E0963C16452A1B001234C3 /* finger.png in Resources */,
+				098BDDB31653B0B4004863BF /* HushWebPanOptionsView.xib in Resources */,
+				09EE45231653BA2E000BE005 /* mainPaw.png in Resources */,
+				09D2B13E166A9A4D00DFE807 /* urlEntryLogo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,10 +257,10 @@
 				094E1FDD1633459400D456D0 /* main.m in Sources */,
 				094E1FE11633459400D456D0 /* HushWebAppDelegate.m in Sources */,
 				094E1FED1633459400D456D0 /* HushWebViewController.m in Sources */,
-				094E1FF71633460A00D456D0 /* HushWebNavigatorView.m in Sources */,
 				094E20021633469A00D456D0 /* HushWebModel.m in Sources */,
 				094E20031633469A00D456D0 /* HushWebTabManager.m in Sources */,
 				094E20041633469A00D456D0 /* HushWebTab.m in Sources */,
+				098BDDB11653B05B004863BF /* HushWebPanOptionsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
