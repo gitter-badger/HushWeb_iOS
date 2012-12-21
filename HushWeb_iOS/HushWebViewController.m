@@ -117,6 +117,34 @@
     //[self hideNavigator];
 }
 
+
+#pragma TextField Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.urlTextField) {
+        NSString *url = [self checkStringURL:textField.text];
+        [self urlEntered:url];
+        [UIView animateWithDuration:0.2 animations:^(void) {
+            [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
+            [self.grayOverlay setAlpha:0.0];
+        } completion:^(BOOL finished) {
+            [self.grayOverlay removeFromSuperview];
+            self.grayOverlay = nil;
+        }];
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [UIView animateWithDuration:0.2 animations:^(void) {
+        [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
+        [self.grayOverlay setAlpha:0.0];
+    } completion:^(BOOL finished) {
+        [self.grayOverlay removeFromSuperview];
+        self.grayOverlay = nil;
+    }];
+}
+
 #pragma Navigator Delegate
 - (void)urlEntered:(NSString *)urlString {
     NSURL *url = [NSURL URLWithString:[self checkStringURL:urlString]];
