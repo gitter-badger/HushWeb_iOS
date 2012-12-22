@@ -28,8 +28,16 @@
     
 }
 
--(void)visitNewUrl:(NSURL *)url {
+- (void)visitNewUrl:(NSURL *)url {
     [self.tabManager visitNewUrl:url];
+}
+
+- (NSURL *)backButtonPressed {
+    return [self.tabManager backButtonPressed];
+}
+
+- (NSURL *)forwardButtonPressed {
+    return [self.tabManager forwardButtonPressed];
 }
 
 - (NSInteger)closeCurrentTab {

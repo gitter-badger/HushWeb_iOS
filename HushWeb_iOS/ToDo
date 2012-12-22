@@ -5,7 +5,11 @@ TODO
 [x] Bring up url entry field from one of the options
 [x] URL entry onto entry field
 [x] Save history of tab each new entry
-[] Back and Forward on a webpage
+[x] Back and Forward on a webpage
+[x] Highlight url when urlfield is brought up
+[] Create the navigator
+[] Create new tab by user
+[] Switch between tabs by user
 [] Create a singleton for options, i.e. home page, etc.
 
 
@@ -30,3 +34,24 @@ ScrollViewDidScroll
         - If contentOffset.x < 0 - pull to go back
         - If contentOffset.x > self.view.frame.size.width - pull
         - If contentOffset.y < 0 - pull to refresh
+
+
+
+
+RANDOM THOUGHTS
+case 0: new tab, new url entry
+BEFORE - currentPlaceInHistory = 0; tab.tabHistory.count = 0
+AFTER - currentPlaceInHistory = 0; tab.tabHistory.count = 1
+
+case 1: url entry on existing tab, last place in history
+currentPlaceInHistory = tab.tabHistory.count - 1
+
+case 2: back button on existing tab
+
+case 3: forward button on existing tab
+
+case 4: url entry on existing tab, in the middle of history
+
+case 5: back more than one space
+
+case 6: forward more than one space

@@ -41,7 +41,6 @@
 						<string key="NSFrame">{{136, 438}, {48, 48}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -65,13 +64,13 @@
 							<string key="NSResourceName">urlEntryLogo.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="176478214">
+					<object class="IBUIImageView" id="310166616">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 216}, {48, 48}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="769705005"/>
+						<reference key="NSNextKeyView" ref="251650450"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -80,7 +79,7 @@
 							<string key="NSResourceName">backButton.png</string>
 						</object>
 					</object>
-					<object class="IBUIImageView" id="769705005">
+					<object class="IBUIImageView" id="251650450">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{272, 216}, {48, 48}}</string>
@@ -99,7 +98,7 @@
 				<string key="NSFrameSize">{320, 480}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="176478214"/>
+				<reference key="NSNextKeyView" ref="310166616"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
@@ -126,6 +125,22 @@
 					</object>
 					<int key="connectionID">10</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">backButton</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="310166616"/>
+					</object>
+					<int key="connectionID">13</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">forwardButton</string>
+						<reference key="source" ref="191373211"/>
+						<reference key="destination" ref="251650450"/>
+					</object>
+					<int key="connectionID">14</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -141,8 +156,8 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="534333706"/>
 							<reference ref="195626872"/>
-							<reference ref="176478214"/>
-							<reference ref="769705005"/>
+							<reference ref="310166616"/>
+							<reference ref="251650450"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -170,12 +185,12 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">11</int>
-						<reference key="object" ref="176478214"/>
+						<reference key="object" ref="310166616"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="769705005"/>
+						<reference key="object" ref="251650450"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -195,7 +210,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">12</int>
+			<int key="maxID">14</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -203,10 +218,20 @@
 					<string key="className">HushWebPanOptionsView</string>
 					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="backButton">UIImageView</string>
+						<string key="forwardButton">UIImageView</string>
 						<string key="pawPrint">UIImageView</string>
 						<string key="urlEntry">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="backButton">
+							<string key="name">backButton</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="forwardButton">
+							<string key="name">forwardButton</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="pawPrint">
 							<string key="name">pawPrint</string>
 							<string key="candidateClassName">UIImageView</string>

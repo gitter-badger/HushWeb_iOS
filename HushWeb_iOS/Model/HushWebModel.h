@@ -17,6 +17,8 @@
 -(void)createNewTab;
 -(void)createNewTabWithURL:(NSURL *)url;
 -(void)visitNewUrl:(NSURL *)url;                //adds new url to history
+-(NSURL *)backButtonPressed;
+-(NSURL *)forwardButtonPressed;
 -(NSInteger)closeCurrentTab;                    //returns next tab's index
 -(HushWebTab *)getCurrentTab;
 -(HushWebTab *)switchToTabAt:(NSInteger)index;

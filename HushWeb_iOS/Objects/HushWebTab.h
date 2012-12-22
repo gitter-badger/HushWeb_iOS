@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HushWebTab : NSObject
+@interface HushWebTab : NSObject {
+    NSInteger currentPlaceInHistory;
+}
 
 @property (nonatomic, strong) NSMutableArray *tabHistory;
 @property (nonatomic, strong) UIImageView *cachedImage;
@@ -16,6 +18,8 @@
 
 -(void)visitNewUrl:(NSURL *)url;
 -(NSURL *)getCurrentURL;
+-(NSURL *)backButtonPressed;
+-(NSURL *)forwardButtonPressed;
 
 @end
 

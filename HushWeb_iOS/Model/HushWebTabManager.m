@@ -32,6 +32,14 @@
     [self.currentTab visitNewUrl:url];
 }
 
+- (NSURL *)backButtonPressed {
+    return [self.currentTab backButtonPressed];
+}
+
+- (NSURL *)forwardButtonPressed {
+    return [self.currentTab forwardButtonPressed];
+}
+
 - (NSInteger)closeCurrentTab {
 //    NSLog(@"Closing current tab.");
     NSInteger currentIndex = [self.tabs indexOfObject:self.currentTab];

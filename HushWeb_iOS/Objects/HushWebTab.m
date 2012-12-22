@@ -22,6 +22,7 @@
         self.cachedImage.backgroundColor = [UIColor whiteColor];
         self.webView = [[UIWebView alloc] init];
         self.webView.scalesPageToFit = YES;
+        currentPlaceInHistory = 0;
         
         //we don't worry about the frames until we set them in VC
     }
@@ -29,13 +30,46 @@
 }
 
 - (void)visitNewUrl:(NSURL *)url {
-    [self.tabHistory addObject:url];
-    NSLog(@"URL added to history: %@. Now has %d sites logged.", url.absoluteString, self.tabHistory.count);
+    if (currentPlaceInHistory == self.tabHistory.count - 1 || self.tabHistory.count == 0) {
+        [self.tabHistory addObject:url];
+        currentPlaceInHistory = self.tabHistory.count - 1;
+    } else {
+        NSRange range = NSMakeRange(currentPlaceInHistory+1, (self.tabHistory.count - 1 - currentPlaceInHistory));
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:range];
+        [self.tabHistory removeObjectsAtIndexes:indexSet];
+        [self.tabHistory addObject:url];
+        currentPlaceInHistory = self.tabHistory.count - 1;
+    }
+    NSLog(@"URL added to history: %@. Now has %d sites logged. Current place is now %d.", url.absoluteString, self.tabHistory.count, currentPlaceInHistory);
 }
 
 - (NSURL *)getCurrentURL {
-    NSURL *url = [self.tabHistory lastObject];
-    return url;
+    if (self.tabHistory > 0) {
+        NSURL *url = [self.tabHistory objectAtIndex:currentPlaceInHistory];
+        return url;
+    } else {
+        return nil;
+    }
+}
+
+- (NSURL *)backButtonPressed {
+    if (currentPlaceInHistory != 0) {
+        currentPlaceInHistory = currentPlaceInHistory - 1;
+        NSURL *url = [self.tabHistory objectAtIndex:currentPlaceInHistory];
+        NSLog(@"Go back to %@", url.absoluteString);
+        return url;
+    }
+    return nil;
+}
+
+- (NSURL *)forwardButtonPressed {
+    if (currentPlaceInHistory != self.tabHistory.count - 1) {
+        currentPlaceInHistory = currentPlaceInHistory + 1;
+        NSURL *url = [self.tabHistory objectAtIndex:currentPlaceInHistory];
+        NSLog(@"Go forward to %@", url.absoluteString);
+        return url;
+    }
+    return nil;
 }
 
 @end

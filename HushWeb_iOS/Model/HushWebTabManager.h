@@ -16,6 +16,8 @@
 
 -(void)createNewTab;
 -(void)visitNewUrl:(NSURL *)url;
+-(NSURL *)backButtonPressed;
+-(NSURL *)forwardButtonPressed;
 -(NSInteger)closeCurrentTab;
 -(HushWebTab *)switchToTabAt:(NSInteger)index;
 

@@ -17,6 +17,7 @@
     UIImageView *currentTabImageView;
     
     BOOL panFromPaw;
+    BOOL wentBackOrForward;
 }
 
 //Views

@@ -14,6 +14,8 @@
 @synthesize touchPoint;
 
 @synthesize urlEntry = _urlEntry;
+@synthesize backButton = _backButton;
+@synthesize forwardButton = _forwardButton;
 
 - (id)initWithFrame:(CGRect)frame
 {

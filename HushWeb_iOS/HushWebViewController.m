@@ -84,9 +84,6 @@
     UIWebView *webView = nextTab.webView;
     webView.delegate = self;
     webView.frame = self.view.bounds;
-    NSURLRequest *urlRequest;
-    urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
-    [webView loadRequest:urlRequest];
     [webView addGestureRecognizer:self.panGestureRecognizer];
     
     [UIView animateWithDuration:0.4 animations:^(void) {
@@ -96,6 +93,7 @@
         [currentTabImageView removeFromSuperview];
         [currentWebView removeFromSuperview];
         currentWebView = webView;
+        [self urlEntered:@"http://www.google.com"];
     }];
 }
 
@@ -114,18 +112,25 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    //[self hideNavigator];
-    NSURL *urlLoaded = webView.request.URL.absoluteURL;
-    HushWebTab *currentTab = [self.model getCurrentTab];
-    if (![[currentTab getCurrentURL] isEqual:urlLoaded]) {
-        [self.model visitNewUrl:urlLoaded];
+    if (!wentBackOrForward) {
+        NSURL *urlLoaded = webView.request.URL.absoluteURL;
+        HushWebTab *currentTab = [self.model getCurrentTab];
+        if (currentTab.tabHistory.count > 0) {
+            if (![[currentTab getCurrentURL] isEqual:urlLoaded]) {
+                [self.model visitNewUrl:urlLoaded];
+            }
+        } else {
+            [self.model visitNewUrl:urlLoaded];
+        }
     }
+    if (!webView.loading) wentBackOrForward = NO;
 }
 
 
 #pragma TextField Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.urlTextField) {
+        wentBackOrForward = NO;
         NSString *url = [self checkStringURL:textField.text];
         [self urlEntered:url];
         [UIView animateWithDuration:0.2 animations:^(void) {
@@ -161,9 +166,11 @@
 - (IBAction)handlePanGesture:(id)sender {
     if (sender == self.panGestureRecognizer) {
         CGPoint startingPoint = [sender locationInView:currentWebView];
+        
         switch ([self.panGestureRecognizer state]) {
             case UIGestureRecognizerStateBegan:
                 if (startingPoint.y >= currentWebView.frame.size.height - 60) {
+                    //If drag was from bottom of the screen, bring up the options screen
                     currentWebView.scrollView.scrollEnabled = NO;
                     panFromPaw = YES;
                     [self.view addSubview:self.panOptions];
@@ -174,16 +181,20 @@
                     }];
                 }
                 break;
+                
             case UIGestureRecognizerStateChanged:
                 if (!panFromPaw) {
                     
                 } else {
+                    //Keep drawing the line on the options screen
                     self.panOptions.touchPoint = [self.panGestureRecognizer locationInView:self.panOptions];
                     [self.panOptions setNeedsDisplay];
                 }
                 break;
+                
             case UIGestureRecognizerStateEnded:
                 if (panFromPaw) {
+                    //Restore Browsing state, when completed, check ending point
                     currentWebView.scrollView.scrollEnabled = YES;
                     
                     CGPoint endingPoint = [sender locationInView:self.panOptions];
@@ -195,6 +206,7 @@
                         [self.panOptions removeFromSuperview];
                         
                         if (CGRectContainsPoint(self.panOptions.urlEntry.frame, endingPoint)) {
+                            //Bring up URL entry only
                             self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.frame];
                             self.grayOverlay.backgroundColor = [UIColor lightGrayColor];
                             self.grayOverlay.alpha = 0.0;
@@ -203,10 +215,28 @@
                             [self.view bringSubviewToFront:self.urlTextField];
                             [UIView animateWithDuration:0.2 animations:^(void) {
                                 [self.grayOverlay setAlpha:0.5];
+                                [self.urlTextField setText:currentWebView.request.URL.absoluteString];
                                 [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.frame.origin.y + self.urlTextField.frame.size.height)];
+                                [self.urlTextField selectAll:self];
                                 [self.urlTextField becomeFirstResponder];
                             } completion:^(BOOL finished) {
+                                [[UIMenuController sharedMenuController] setMenuVisible:NO animated:NO];
                             }];
+                        } else if (CGRectContainsPoint(self.panOptions.backButton.frame, endingPoint)) {
+                            //Go back. We need to check this during StateChanged to see if we should popup the past history
+                            NSURL *backURL = [self.model backButtonPressed];
+                            if (backURL != nil) {
+                                wentBackOrForward = YES;
+                                [currentWebView goBack];
+//                                [self urlEntered:backURL.absoluteString];
+                            }
+                        } else if (CGRectContainsPoint(self.panOptions.forwardButton.frame, endingPoint)) {
+                            NSURL *forwardURL = [self.model forwardButtonPressed];
+                            if (forwardURL != nil) {
+                                wentBackOrForward = YES;
+                                [currentWebView goForward];
+//                                [self urlEntered:forwardURL.absoluteString];
+                            }
                         }
                     }];
                 }
