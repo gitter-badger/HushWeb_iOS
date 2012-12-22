@@ -115,6 +115,11 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     //[self hideNavigator];
+    NSURL *urlLoaded = webView.request.URL.absoluteURL;
+    HushWebTab *currentTab = [self.model getCurrentTab];
+    if (![[currentTab getCurrentURL] isEqual:urlLoaded]) {
+        [self.model visitNewUrl:urlLoaded];
+    }
 }
 
 

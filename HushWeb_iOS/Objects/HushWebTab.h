@@ -14,6 +14,9 @@
 @property (nonatomic, strong) UIImageView *cachedImage;
 @property (nonatomic, strong) UIWebView *webView;
 
+-(void)visitNewUrl:(NSURL *)url;
+-(NSURL *)getCurrentURL;
+
 @end
 
 

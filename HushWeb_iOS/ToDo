@@ -1,15 +1,12 @@
 TODO
-
 [x] Create a new tab with a random page
 [x] Switch between tabs
-[x] Be able to close a tab
-[x] Scrolling web navigator
-[x] URL entry
-[] Each time a web page loads, add to history
-[] Back and forward on a webpage
+[x] Bring up options from swipe from bottom
+[x] Bring up url entry field from one of the options
+[x] URL entry onto entry field
+[x] Save history of tab each new entry
+[] Back and Forward on a webpage
 [] Create a singleton for options, i.e. home page, etc.
-[] Double tap scroll, zoom
-
 
 
 

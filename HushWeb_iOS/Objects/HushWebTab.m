@@ -28,4 +28,14 @@
     return self;
 }
 
+- (void)visitNewUrl:(NSURL *)url {
+    [self.tabHistory addObject:url];
+    NSLog(@"URL added to history: %@. Now has %d sites logged.", url.absoluteString, self.tabHistory.count);
+}
+
+- (NSURL *)getCurrentURL {
+    NSURL *url = [self.tabHistory lastObject];
+    return url;
+}
+
 @end

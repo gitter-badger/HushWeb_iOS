@@ -28,8 +28,16 @@
     
 }
 
+-(void)visitNewUrl:(NSURL *)url {
+    [self.tabManager visitNewUrl:url];
+}
+
 - (NSInteger)closeCurrentTab {
     return [self.tabManager closeCurrentTab];
+}
+
+- (HushWebTab *)getCurrentTab {
+    return self.tabManager.currentTab;
 }
 
 - (HushWebTab *)switchToTabAt:(NSInteger)index {

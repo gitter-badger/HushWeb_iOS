@@ -16,7 +16,9 @@
 @property (nonatomic, strong) HushWebTabManager *tabManager;
 -(void)createNewTab;
 -(void)createNewTabWithURL:(NSURL *)url;
+-(void)visitNewUrl:(NSURL *)url;                //adds new url to history
 -(NSInteger)closeCurrentTab;                    //returns next tab's index
+-(HushWebTab *)getCurrentTab;
 -(HushWebTab *)switchToTabAt:(NSInteger)index;
 
 -(void)printState;

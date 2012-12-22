@@ -23,11 +23,17 @@
 }
 
 - (void)createNewTab {
+//    NSLog(@"Creating new tab.");
     HushWebTab *newTab = [[HushWebTab alloc] init];
     [self.tabs insertObject:newTab atIndex:0];
 }
 
+- (void)visitNewUrl:(NSURL *)url {
+    [self.currentTab visitNewUrl:url];
+}
+
 - (NSInteger)closeCurrentTab {
+//    NSLog(@"Closing current tab.");
     NSInteger currentIndex = [self.tabs indexOfObject:self.currentTab];
     [self.tabs removeObject:self.currentTab];
     self.currentTab = nil;
@@ -42,6 +48,7 @@
 }
 
 - (HushWebTab *)switchToTabAt:(NSInteger)index {
+//    NSLog(@"Switching to tab at index %d", index);
     HushWebTab *tab = [self.tabs objectAtIndex:index];
     self.currentTab = tab;
     return tab;

@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0930B306163DDB3700A280D3 /* mainTab.png in Resources */ = {isa = PBXBuildFile; fileRef = 0930B305163DDB3700A280D3 /* mainTab.png */; };
-		094797AC163FA8C900D6426D /* tempBackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 094797AB163FA8C900D6426D /* tempBackButton.png */; };
+		093DA9CD168589C500621CAA /* backButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 093DA9CB168589C500621CAA /* backButton.png */; };
+		093DA9CE168589C500621CAA /* forwardButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 093DA9CC168589C500621CAA /* forwardButton.png */; };
 		094E1FD11633459400D456D0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD01633459400D456D0 /* UIKit.framework */; };
 		094E1FD31633459400D456D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD21633459400D456D0 /* Foundation.framework */; };
 		094E1FD51633459400D456D0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094E1FD41633459400D456D0 /* CoreGraphics.framework */; };
@@ -33,7 +34,8 @@
 
 /* Begin PBXFileReference section */
 		0930B305163DDB3700A280D3 /* mainTab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mainTab.png; sourceTree = "<group>"; };
-		094797AB163FA8C900D6426D /* tempBackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tempBackButton.png; sourceTree = "<group>"; };
+		093DA9CB168589C500621CAA /* backButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backButton.png; sourceTree = "<group>"; };
+		093DA9CC168589C500621CAA /* forwardButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forwardButton.png; sourceTree = "<group>"; };
 		094E1FCC1633459400D456D0 /* HushWeb_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HushWeb_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		094E1FD01633459400D456D0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		094E1FD21633459400D456D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,7 +96,8 @@
 				09EE45221653BA2E000BE005 /* mainPaw.png */,
 				09E0963B16452A1B001234C3 /* finger.png */,
 				0930B305163DDB3700A280D3 /* mainTab.png */,
-				094797AB163FA8C900D6426D /* tempBackButton.png */,
+				093DA9CB168589C500621CAA /* backButton.png */,
+				093DA9CC168589C500621CAA /* forwardButton.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -239,11 +242,12 @@
 				094E1FEA1633459400D456D0 /* MainStoryboard.storyboard in Resources */,
 				094E1FF4163345B100D456D0 /* ToDo in Resources */,
 				0930B306163DDB3700A280D3 /* mainTab.png in Resources */,
-				094797AC163FA8C900D6426D /* tempBackButton.png in Resources */,
 				09E0963C16452A1B001234C3 /* finger.png in Resources */,
 				098BDDB31653B0B4004863BF /* HushWebPanOptionsView.xib in Resources */,
 				09EE45231653BA2E000BE005 /* mainPaw.png in Resources */,
 				09D2B13E166A9A4D00DFE807 /* urlEntryLogo.png in Resources */,
+				093DA9CD168589C500621CAA /* backButton.png in Resources */,
+				093DA9CE168589C500621CAA /* forwardButton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

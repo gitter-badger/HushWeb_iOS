@@ -15,6 +15,7 @@
 @property (nonatomic, strong) HushWebTab *currentTab;
 
 -(void)createNewTab;
+-(void)visitNewUrl:(NSURL *)url;
 -(NSInteger)closeCurrentTab;
 -(HushWebTab *)switchToTabAt:(NSInteger)index;
 
