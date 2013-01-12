@@ -18,11 +18,13 @@
 @implementation HushWebViewController
 
 @synthesize panOptions = _panOptions;
+@synthesize navigatorView = _navigatorView;
 @synthesize urlTextField = _urlTextField;
 
 @synthesize grayOverlay = _grayOverlay;
 
 @synthesize panGestureRecognizer = _panGestureRecognizer;
+@synthesize tapGestureOnOverlay = _tapGestureOnOverlay;
 
 @synthesize model = _model;
 
@@ -34,10 +36,15 @@
     self.view.backgroundColor = [UIColor lightGrayColor];
     
     self.panOptions = [[HushWebPanOptionsView alloc] init];
-    self.panOptions.frame = self.view.frame;
+    self.panOptions.frame = self.view.bounds;
     self.panOptions.pawPrint.frame = (CGRect){{self.panOptions.pawPrint.frame.origin.x, self.panOptions.frame.size.height - 48}, {48, 48}};
     
-    self.urlTextField.center = CGPointMake(self.view.center.x, self.view.frame.origin.y - self.urlTextField.frame.size.height);
+    self.navigatorView = [[HushWebNavigatorView alloc] init];
+    self.navigatorView.frame = self.view.bounds;
+    
+    self.urlTextField.center = CGPointMake(self.view.center.x, self.view.bounds.origin.y - self.urlTextField.frame.size.height);
+    
+    self.tapGestureOnOverlay = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     
     self.model = [[HushWebModel alloc] init];
     [self.model createNewTab];
@@ -155,11 +162,19 @@
     }];
 }
 
-#pragma Navigator Delegate
+#pragma Pan Options Business
 - (void)urlEntered:(NSString *)urlString {
     NSURL *url = [NSURL URLWithString:[self checkStringURL:urlString]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [currentWebView loadRequest:urlRequest];
+}
+
+- (void)checkForBackAndForwardButtons {
+    HushWebTab *currentTab = [self.model getCurrentTab];
+    if([currentTab checkIfCanGoBack]) self.panOptions.backButton.alpha = 1.0;
+    else self.panOptions.backButton.alpha = 0.4;
+    if ([currentTab checkIfCanGoForward]) self.panOptions.forwardButton.alpha = 1.0;
+    else self.panOptions.forwardButton.alpha = 0.4;
 }
 
 #pragma Gesture Recognizers
@@ -173,6 +188,7 @@
                     //If drag was from bottom of the screen, bring up the options screen
                     currentWebView.scrollView.scrollEnabled = NO;
                     panFromPaw = YES;
+                    [self checkForBackAndForwardButtons];
                     [self.view addSubview:self.panOptions];
                     [UIView animateWithDuration:0.2 animations:^(void) {
                         [self.panOptions setAlpha:0.8];
@@ -207,20 +223,32 @@
                         
                         if (CGRectContainsPoint(self.panOptions.urlEntry.frame, endingPoint)) {
                             //Bring up URL entry only
-                            self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.frame];
+                            self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
                             self.grayOverlay.backgroundColor = [UIColor lightGrayColor];
                             self.grayOverlay.alpha = 0.0;
+                            self.grayOverlay.userInteractionEnabled = YES;
                             [self.view addSubview:self.grayOverlay];
+                            
+                            [self.grayOverlay addGestureRecognizer:self.tapGestureOnOverlay];
                             
                             [self.view bringSubviewToFront:self.urlTextField];
                             [UIView animateWithDuration:0.2 animations:^(void) {
                                 [self.grayOverlay setAlpha:0.5];
                                 [self.urlTextField setText:currentWebView.request.URL.absoluteString];
-                                [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.frame.origin.y + self.urlTextField.frame.size.height)];
+                                [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.bounds.origin.y + self.urlTextField.frame.size.height)];
                                 [self.urlTextField selectAll:self];
                                 [self.urlTextField becomeFirstResponder];
                             } completion:^(BOOL finished) {
                                 [[UIMenuController sharedMenuController] setMenuVisible:NO animated:NO];
+                            }];
+                        } else if (CGRectContainsPoint(self.panOptions.navigatorButton.frame, endingPoint)) {
+                            [self.navigatorView setAlpha:0.0];
+                            [self.view addSubview:self.navigatorView];
+                            [self.view bringSubviewToFront:self.navigatorView];
+                            [UIView animateWithDuration:0.2 animations:^(void) {
+                                [self.navigatorView setAlpha:1.0];
+                            } completion:^(BOOL finished) {
+                                
                             }];
                         } else if (CGRectContainsPoint(self.panOptions.backButton.frame, endingPoint)) {
                             //Go back. We need to check this during StateChanged to see if we should popup the past history
@@ -247,6 +275,10 @@
                 break;
         }
     }
+}
+
+- (void)handleTapGesture:(id)sender {
+    [self.urlTextField endEditing:YES];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {

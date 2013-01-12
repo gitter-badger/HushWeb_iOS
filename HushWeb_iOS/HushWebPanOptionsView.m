@@ -14,6 +14,7 @@
 @synthesize touchPoint;
 
 @synthesize urlEntry = _urlEntry;
+@synthesize navigatorButton = _navigatorButton;
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HushWebPanOptionsView.h"
+#import "HushWebNavigatorView.h"
 
 @class HushWebModel;
 
@@ -22,13 +23,16 @@
 
 //Views
 @property (nonatomic, strong) HushWebPanOptionsView *panOptions;
+@property (nonatomic, strong) HushWebNavigatorView *navigatorView;
 @property (nonatomic, weak) IBOutlet UITextField *urlTextField;
 
 @property (nonatomic, strong) UIImageView *grayOverlay;
 
 //Gestures
 @property (nonatomic, weak) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureOnOverlay;
 
 - (IBAction)handlePanGesture:(id)sender;
+- (IBAction)handleTapGesture:(id)sender;
 
 @end

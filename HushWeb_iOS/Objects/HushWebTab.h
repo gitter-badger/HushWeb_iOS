@@ -19,7 +19,9 @@
 -(void)visitNewUrl:(NSURL *)url;
 -(NSURL *)getCurrentURL;
 -(NSURL *)backButtonPressed;
+- (BOOL)checkIfCanGoBack;
 -(NSURL *)forwardButtonPressed;
+- (BOOL)checkIfCanGoForward;
 
 @end
 

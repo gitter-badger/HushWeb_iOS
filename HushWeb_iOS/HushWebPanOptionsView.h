@@ -15,6 +15,7 @@
 @property (nonatomic) CGPoint touchPoint;
 
 @property (nonatomic, weak) IBOutlet UIImageView *urlEntry;
+@property (nonatomic, weak) IBOutlet UIImageView *navigatorButton;
 @property (nonatomic, weak) IBOutlet UIImageView *backButton;
 @property (nonatomic, weak) IBOutlet UIImageView *forwardButton;
 

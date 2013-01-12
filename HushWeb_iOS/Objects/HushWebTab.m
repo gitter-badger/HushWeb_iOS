@@ -53,7 +53,7 @@
 }
 
 - (NSURL *)backButtonPressed {
-    if (currentPlaceInHistory != 0) {
+    if ([self checkIfCanGoBack]) {
         currentPlaceInHistory = currentPlaceInHistory - 1;
         NSURL *url = [self.tabHistory objectAtIndex:currentPlaceInHistory];
         NSLog(@"Go back to %@", url.absoluteString);
@@ -62,14 +62,24 @@
     return nil;
 }
 
+- (BOOL)checkIfCanGoBack {
+    if (currentPlaceInHistory == 0) return NO;
+    return YES;
+}
+
 - (NSURL *)forwardButtonPressed {
-    if (currentPlaceInHistory != self.tabHistory.count - 1) {
+    if ([self checkIfCanGoForward]) {
         currentPlaceInHistory = currentPlaceInHistory + 1;
         NSURL *url = [self.tabHistory objectAtIndex:currentPlaceInHistory];
         NSLog(@"Go forward to %@", url.absoluteString);
         return url;
     }
     return nil;
+}
+
+- (BOOL)checkIfCanGoForward {
+    if (currentPlaceInHistory == self.tabHistory.count - 1) return NO;
+    return YES;
 }
 
 @end
