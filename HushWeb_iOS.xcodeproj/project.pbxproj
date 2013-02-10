@@ -29,6 +29,7 @@
 		094E20041633469A00D456D0 /* HushWebTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 094E20011633469A00D456D0 /* HushWebTab.m */; };
 		095263F71686F3FA00FE9326 /* HushWebNavigatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 095263F61686F3FA00FE9326 /* HushWebNavigatorView.m */; };
 		095263F91686F40D00FE9326 /* HushWebNavigatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 095263F81686F40D00FE9326 /* HushWebNavigatorView.xib */; };
+		0963AA8B16B3C52C0036A834 /* tab.png in Resources */ = {isa = PBXBuildFile; fileRef = 0963AA8A16B3C52C0036A834 /* tab.png */; };
 		098BDDB11653B05B004863BF /* HushWebPanOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 098BDDB01653B05B004863BF /* HushWebPanOptionsView.m */; };
 		098BDDB31653B0B4004863BF /* HushWebPanOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 098BDDB21653B0B4004863BF /* HushWebPanOptionsView.xib */; };
 		09D2B13E166A9A4D00DFE807 /* urlEntryLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 09D2B13D166A9A4D00DFE807 /* urlEntryLogo.png */; };
@@ -68,6 +69,7 @@
 		095263F51686F3FA00FE9326 /* HushWebNavigatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebNavigatorView.h; sourceTree = "<group>"; };
 		095263F61686F3FA00FE9326 /* HushWebNavigatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebNavigatorView.m; sourceTree = "<group>"; };
 		095263F81686F40D00FE9326 /* HushWebNavigatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HushWebNavigatorView.xib; sourceTree = "<group>"; };
+		0963AA8A16B3C52C0036A834 /* tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab.png; sourceTree = "<group>"; };
 		098BDDAF1653B05B004863BF /* HushWebPanOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HushWebPanOptionsView.h; sourceTree = "<group>"; };
 		098BDDB01653B05B004863BF /* HushWebPanOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HushWebPanOptionsView.m; sourceTree = "<group>"; };
 		098BDDB21653B0B4004863BF /* HushWebPanOptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HushWebPanOptionsView.xib; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		0930B304163DDB3700A280D3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0963AA8A16B3C52C0036A834 /* tab.png */,
 				09D2B13D166A9A4D00DFE807 /* urlEntryLogo.png */,
 				09EE45221653BA2E000BE005 /* mainPaw.png */,
 				09E0963B16452A1B001234C3 /* finger.png */,
@@ -265,6 +268,7 @@
 				095263F91686F40D00FE9326 /* HushWebNavigatorView.xib in Resources */,
 				09143736168C0B73001D4EA7 /* refreshButton.png in Resources */,
 				09143739168C2F9D001D4EA7 /* navigatorIcon.png in Resources */,
+				0963AA8B16B3C52C0036A834 /* tab.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +368,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HushWeb_iOS/HushWeb_iOS-Prefix.pch";
 				INFOPLIST_FILE = "HushWeb_iOS/HushWeb_iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -376,7 +380,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HushWeb_iOS/HushWeb_iOS-Prefix.pch";
 				INFOPLIST_FILE = "HushWeb_iOS/HushWeb_iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -8,15 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HushWebPanOptionsView : UIView
+@protocol PanOptionsDelegate
+
+-(void)urlEntered:(NSString *)url;
+
+@end
+
+@interface HushWebPanOptionsView : UIView <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 //Subviews
-@property (nonatomic, weak) IBOutlet UIImageView *pawPrint;
-@property (nonatomic) CGPoint touchPoint;
+@property (nonatomic, weak) IBOutlet UITextField *urlEntry;
+@property (nonatomic, weak) IBOutlet UIView *additionalKeyboard;
+@property (nonatomic, weak) IBOutlet UIImageView *keyboardTab;
 
-@property (nonatomic, weak) IBOutlet UIImageView *urlEntry;
-@property (nonatomic, weak) IBOutlet UIImageView *navigatorButton;
-@property (nonatomic, weak) IBOutlet UIImageView *backButton;
-@property (nonatomic, weak) IBOutlet UIImageView *forwardButton;
+@property (nonatomic, weak) IBOutlet UISwipeGestureRecognizer *swipeDownOnTab;
+
+@property (nonatomic) id <PanOptionsDelegate> delegate;
 
 @end

@@ -12,6 +12,15 @@
 @implementation HushWebModel
 @synthesize tabManager = _tabManager;
 
++ (id)sharedModel {
+    static HushWebModel *sharedModel = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedModel = [[self alloc] init];
+    });
+    return sharedModel;
+}
+
 - (id)init {
     self = [super init];
     if (self) {

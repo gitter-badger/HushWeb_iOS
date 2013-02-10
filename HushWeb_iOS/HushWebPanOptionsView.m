@@ -10,13 +10,10 @@
 
 @implementation HushWebPanOptionsView
 
-@synthesize pawPrint = _pawPrint;
-@synthesize touchPoint;
-
 @synthesize urlEntry = _urlEntry;
-@synthesize navigatorButton = _navigatorButton;
-@synthesize backButton = _backButton;
-@synthesize forwardButton = _forwardButton;
+@synthesize swipeDownOnTab = _swipeDownOnTab;
+
+@synthesize delegate = _delegate;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -33,26 +30,79 @@
     return self;
 }
 
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-    CGContextRef context    = UIGraphicsGetCurrentContext();
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-    
-    CGContextSetLineWidth(context, 8.0);
-    
-    
-    CGContextMoveToPoint(context, self.pawPrint.center.x,self.pawPrint.center.y); //start at this point
-    
-    CGContextAddLineToPoint(context, self.touchPoint.x, self.touchPoint.y); //draw to this point
-    
-    // and now draw the Path!
-    CGContextStrokePath(context);
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.urlEntry) {
+        [self.delegate urlEntered:[self checkStringURL:textField.text]];
+    }
+    return YES;
+//    if (textField == self.urlTextField) {
+//        wentBackOrForward = NO;
+//        NSString *url = [self checkStringURL:textField.text];
+//        [self urlEntered:url];
+//        [UIView animateWithDuration:0.2 animations:^(void) {
+//            [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
+//            [self.grayOverlay setAlpha:0.0];
+//        } completion:^(BOOL finished) {
+//            [self.grayOverlay removeFromSuperview];
+//            self.grayOverlay = nil;
+//        }];
+//        [textField resignFirstResponder];
+//    }
+//    return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    [UIView animateWithDuration:0.2 animations:^(void) {
+//        [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
+//        [self.grayOverlay setAlpha:0.0];
+//    } completion:^(BOOL finished) {
+//        [self.grayOverlay removeFromSuperview];
+//        self.grayOverlay = nil;
+//    }];
+}
+
+#pragma mark Gesture Recognizers
+- (IBAction)handleSwipeGesture:(id)sender {
+    if (sender == self.swipeDownOnTab) {
+        [UIView animateWithDuration:0.1 animations:^(void) {
+            [self.keyboardTab setAlpha:0.0];
+            [self.additionalKeyboard setAlpha:0.0];
+            
+        } completion:^(BOOL finished) {
+            [self.urlEntry resignFirstResponder];
+        }];
+    }
+}
+
+#pragma mark Other Methods
+//Extraneous Methods - put in a different file?
+- (NSString *)checkStringURL:(NSString *)string {
+    if ([string hasPrefix:@"http://"]) {
+        return string;
+    } else {
+        if ([string hasPrefix:@"www."]) {
+            return [NSString stringWithFormat:@"http://%@", string];
+        } else {
+            if ([string hasSuffix:@".com"] || [string hasSuffix:@".net"] || [string hasSuffix:@".org"]) {
+                return [NSString stringWithFormat:@"http://www.%@", string];
+            } else {
+                return nil;
+            }
+        }
+    }
+    return nil;
+}
+
+/*
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ }
+ */
 
 @end

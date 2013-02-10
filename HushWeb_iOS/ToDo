@@ -2,12 +2,12 @@ TODO
 [x] Create a new tab with a random page
 [x] Switch between tabs
 [x] Bring up options from swipe from bottom
-[x] Bring up url entry field from one of the options
+[x] Bring up url entry field
 [x] URL entry onto entry field
 [x] Save history of tab each new entry
 [x] Back and Forward on a webpage
 [x] Highlight url when urlfield is brought up
-[] Create the navigator
+[x] Create the navigator
 [] Create new tab by user
 [] Switch between tabs by user
 [] Create a singleton for options, i.e. home page, etc.

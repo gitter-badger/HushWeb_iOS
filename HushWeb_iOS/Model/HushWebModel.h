@@ -12,6 +12,8 @@
 
 @interface HushWebModel : NSObject
 
++ (id)sharedModel;                            //this is a singleton
+
 //Tab Manager Stuff
 @property (nonatomic, strong) HushWebTabManager *tabManager;
 -(void)createNewTab;

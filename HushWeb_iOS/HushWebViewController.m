@@ -19,12 +19,8 @@
 
 @synthesize panOptions = _panOptions;
 @synthesize navigatorView = _navigatorView;
-@synthesize urlTextField = _urlTextField;
-
-@synthesize grayOverlay = _grayOverlay;
 
 @synthesize panGestureRecognizer = _panGestureRecognizer;
-@synthesize tapGestureOnOverlay = _tapGestureOnOverlay;
 
 @synthesize model = _model;
 
@@ -37,16 +33,12 @@
     
     self.panOptions = [[HushWebPanOptionsView alloc] init];
     self.panOptions.frame = self.view.bounds;
-    self.panOptions.pawPrint.frame = (CGRect){{self.panOptions.pawPrint.frame.origin.x, self.panOptions.frame.size.height - 48}, {48, 48}};
+    self.panOptions.delegate = self;
     
     self.navigatorView = [[HushWebNavigatorView alloc] init];
     self.navigatorView.frame = self.view.bounds;
     
-    self.urlTextField.center = CGPointMake(self.view.center.x, self.view.bounds.origin.y - self.urlTextField.frame.size.height);
-    
-    self.tapGestureOnOverlay = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    
-    self.model = [[HushWebModel alloc] init];
+    self.model = [HushWebModel sharedModel];
     [self.model createNewTab];
     //[self.model createNewTab];
     
@@ -100,7 +92,8 @@
         [currentTabImageView removeFromSuperview];
         [currentWebView removeFromSuperview];
         currentWebView = webView;
-        [self urlEntered:@"http://www.google.com"];
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com"]];
+        [currentWebView loadRequest:urlRequest];
     }];
 }
 
@@ -133,48 +126,23 @@
     if (!webView.loading) wentBackOrForward = NO;
 }
 
-
-#pragma TextField Delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == self.urlTextField) {
-        wentBackOrForward = NO;
-        NSString *url = [self checkStringURL:textField.text];
-        [self urlEntered:url];
-        [UIView animateWithDuration:0.2 animations:^(void) {
-            [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
-            [self.grayOverlay setAlpha:0.0];
-        } completion:^(BOOL finished) {
-            [self.grayOverlay removeFromSuperview];
-            self.grayOverlay = nil;
-        }];
-        [textField resignFirstResponder];
-    }
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    [UIView animateWithDuration:0.2 animations:^(void) {
-        [self.urlTextField setCenter:CGPointMake(self.view.center.x, 0 - self.urlTextField.frame.size.height / 2)];
-        [self.grayOverlay setAlpha:0.0];
+#pragma Pan Options Business
+- (void)urlEntered:(NSString *)url {
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        [self.panOptions.urlEntry resignFirstResponder];
+        [self.panOptions setAlpha:0.0];
     } completion:^(BOOL finished) {
-        [self.grayOverlay removeFromSuperview];
-        self.grayOverlay = nil;
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+        [currentWebView loadRequest:urlRequest];
     }];
 }
 
-#pragma Pan Options Business
-- (void)urlEntered:(NSString *)urlString {
-    NSURL *url = [NSURL URLWithString:[self checkStringURL:urlString]];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [currentWebView loadRequest:urlRequest];
-}
-
 - (void)checkForBackAndForwardButtons {
-    HushWebTab *currentTab = [self.model getCurrentTab];
-    if([currentTab checkIfCanGoBack]) self.panOptions.backButton.alpha = 1.0;
-    else self.panOptions.backButton.alpha = 0.4;
-    if ([currentTab checkIfCanGoForward]) self.panOptions.forwardButton.alpha = 1.0;
-    else self.panOptions.forwardButton.alpha = 0.4;
+//    HushWebTab *currentTab = [self.model getCurrentTab];
+//    if([currentTab checkIfCanGoBack]) self.panOptions.backButton.alpha = 1.0;
+//    else self.panOptions.backButton.alpha = 0.4;
+//    if ([currentTab checkIfCanGoForward]) self.panOptions.forwardButton.alpha = 1.0;
+//    else self.panOptions.forwardButton.alpha = 0.4;
 }
 
 #pragma Gesture Recognizers
@@ -190,10 +158,13 @@
                     panFromPaw = YES;
                     [self checkForBackAndForwardButtons];
                     [self.view addSubview:self.panOptions];
+                    [self.panOptions.urlEntry setText:currentWebView.request.URL.absoluteString];
                     [UIView animateWithDuration:0.2 animations:^(void) {
-                        [self.panOptions setAlpha:0.8];
+                        [self.panOptions setAlpha:1.0];
+                        [self.panOptions.urlEntry selectAll:self];
                     } completion:^(BOOL finished) {
-                        
+                        [self.panOptions.urlEntry becomeFirstResponder];
+                        [[UIMenuController sharedMenuController] setMenuVisible:NO animated:NO];
                     }];
                 }
                 break;
@@ -203,71 +174,71 @@
                     
                 } else {
                     //Keep drawing the line on the options screen
-                    self.panOptions.touchPoint = [self.panGestureRecognizer locationInView:self.panOptions];
-                    [self.panOptions setNeedsDisplay];
+                    //self.panOptions.touchPoint = [self.panGestureRecognizer locationInView:self.panOptions];
+                    //[self.panOptions setNeedsDisplay];
                 }
                 break;
                 
             case UIGestureRecognizerStateEnded:
-                if (panFromPaw) {
-                    //Restore Browsing state, when completed, check ending point
-                    currentWebView.scrollView.scrollEnabled = YES;
-                    
-                    CGPoint endingPoint = [sender locationInView:self.panOptions];
-                    
-                    [UIView animateWithDuration:0.2 animations:^(void) {
-                        [self.panOptions setAlpha:0.0];
-                        
-                    } completion:^(BOOL finished) {
-                        [self.panOptions removeFromSuperview];
-                        
-                        if (CGRectContainsPoint(self.panOptions.urlEntry.frame, endingPoint)) {
-                            //Bring up URL entry only
-                            self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
-                            self.grayOverlay.backgroundColor = [UIColor lightGrayColor];
-                            self.grayOverlay.alpha = 0.0;
-                            self.grayOverlay.userInteractionEnabled = YES;
-                            [self.view addSubview:self.grayOverlay];
-                            
-                            [self.grayOverlay addGestureRecognizer:self.tapGestureOnOverlay];
-                            
-                            [self.view bringSubviewToFront:self.urlTextField];
-                            [UIView animateWithDuration:0.2 animations:^(void) {
-                                [self.grayOverlay setAlpha:0.5];
-                                [self.urlTextField setText:currentWebView.request.URL.absoluteString];
-                                [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.bounds.origin.y + self.urlTextField.frame.size.height)];
-                                [self.urlTextField selectAll:self];
-                                [self.urlTextField becomeFirstResponder];
-                            } completion:^(BOOL finished) {
-                                [[UIMenuController sharedMenuController] setMenuVisible:NO animated:NO];
-                            }];
-                        } else if (CGRectContainsPoint(self.panOptions.navigatorButton.frame, endingPoint)) {
-                            [self.navigatorView setAlpha:0.0];
-                            [self.view addSubview:self.navigatorView];
-                            [self.view bringSubviewToFront:self.navigatorView];
-                            [UIView animateWithDuration:0.2 animations:^(void) {
-                                [self.navigatorView setAlpha:1.0];
-                            } completion:^(BOOL finished) {
-                                
-                            }];
-                        } else if (CGRectContainsPoint(self.panOptions.backButton.frame, endingPoint)) {
-                            //Go back. We need to check this during StateChanged to see if we should popup the past history
-                            NSURL *backURL = [self.model backButtonPressed];
-                            if (backURL != nil) {
-                                wentBackOrForward = YES;
-                                [currentWebView goBack];
-//                                [self urlEntered:backURL.absoluteString];
-                            }
-                        } else if (CGRectContainsPoint(self.panOptions.forwardButton.frame, endingPoint)) {
-                            NSURL *forwardURL = [self.model forwardButtonPressed];
-                            if (forwardURL != nil) {
-                                wentBackOrForward = YES;
-                                [currentWebView goForward];
-//                                [self urlEntered:forwardURL.absoluteString];
-                            }
-                        }
-                    }];
-                }
+//                if (panFromPaw) {
+//                    //Restore Browsing state, when completed, check ending point
+//                    currentWebView.scrollView.scrollEnabled = YES;
+//                    
+//                    CGPoint endingPoint = [sender locationInView:self.panOptions];
+//                    
+//                    [UIView animateWithDuration:0.2 animations:^(void) {
+//                        [self.panOptions setAlpha:0.0];
+//                        
+//                    } completion:^(BOOL finished) {
+//                        [self.panOptions removeFromSuperview];
+//                        
+//                        if (CGRectContainsPoint(self.panOptions.urlEntry.frame, endingPoint)) {
+//                            //Bring up URL entry only
+//                            self.grayOverlay = [[UIImageView alloc] initWithFrame:self.view.bounds];
+//                            self.grayOverlay.backgroundColor = [UIColor lightGrayColor];
+//                            self.grayOverlay.alpha = 0.0;
+//                            self.grayOverlay.userInteractionEnabled = YES;
+//                            [self.view addSubview:self.grayOverlay];
+//                            
+//                            [self.grayOverlay addGestureRecognizer:self.tapGestureOnOverlay];
+//                            
+//                            [self.view bringSubviewToFront:self.urlTextField];
+//                            [UIView animateWithDuration:0.2 animations:^(void) {
+//                                [self.grayOverlay setAlpha:0.5];
+//                                [self.urlTextField setText:currentWebView.request.URL.absoluteString];
+//                                [self.urlTextField setCenter:CGPointMake(self.view.center.x, self.view.bounds.origin.y + self.urlTextField.frame.size.height)];
+//                                [self.urlTextField selectAll:self];
+//                                [self.urlTextField becomeFirstResponder];
+//                            } completion:^(BOOL finished) {
+//                                [[UIMenuController sharedMenuController] setMenuVisible:NO animated:NO];
+//                            }];
+//                        } else if (CGRectContainsPoint(self.panOptions.navigatorButton.frame, endingPoint)) {
+//                            [self.navigatorView setAlpha:0.0];
+//                            [self.view addSubview:self.navigatorView];
+//                            [self.view bringSubviewToFront:self.navigatorView];
+//                            [UIView animateWithDuration:0.2 animations:^(void) {
+//                                [self.navigatorView setAlpha:1.0];
+//                            } completion:^(BOOL finished) {
+//                                
+//                            }];
+//                        } else if (CGRectContainsPoint(self.panOptions.backButton.frame, endingPoint)) {
+//                            //Go back. We need to check this during StateChanged to see if we should popup the past history
+//                            NSURL *backURL = [self.model backButtonPressed];
+//                            if (backURL != nil) {
+//                                wentBackOrForward = YES;
+//                                [currentWebView goBack];
+////                                [self urlEntered:backURL.absoluteString];
+//                            }
+//                        } else if (CGRectContainsPoint(self.panOptions.forwardButton.frame, endingPoint)) {
+//                            NSURL *forwardURL = [self.model forwardButtonPressed];
+//                            if (forwardURL != nil) {
+//                                wentBackOrForward = YES;
+//                                [currentWebView goForward];
+////                                [self urlEntered:forwardURL.absoluteString];
+//                            }
+//                        }
+//                    }];
+//                }
                 panFromPaw = NO;
                 
                 break;
@@ -278,7 +249,7 @@
 }
 
 - (void)handleTapGesture:(id)sender {
-    [self.urlTextField endEditing:YES];
+//    [self.urlTextField endEditing:YES];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -287,25 +258,5 @@
 
 #pragma navigator stuff
 
-
-
-
-//Extraneous Classes - put in a different file?
-- (NSString *)checkStringURL:(NSString *)string {
-    if ([string hasPrefix:@"http://"]) {
-        return string;
-    } else {
-        if ([string hasPrefix:@"www."]) {
-            return [NSString stringWithFormat:@"http://%@", string];
-        } else {
-            if ([string hasSuffix:@".com"] || [string hasSuffix:@".net"] || [string hasSuffix:@".org"]) {
-                return [NSString stringWithFormat:@"http://www.%@", string];
-            } else {
-                return nil;
-            }
-        }
-    }
-    return nil;
-}
 
 @end
